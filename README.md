@@ -27,12 +27,25 @@
 ## skipped beacouse of limited time box
 - no swagger/open-api decorators,
 
-## curl snippets
-*create a new game*
-`curl -X POST localhost:8080/slot-machine`
-
-*spin...*
+## client integration
+1. create a new game by requresting:
+`curl -X POST localhost:8080/slot-machine`, 
+2. store the `gameId` from the response in client storage
+3. to play aka spin send request: 
 `curl -X POST localhost:8080/slot-machine/spin -H "Content-Type: application/json" -d '{"gameId": "GAME_ID"}'`
 
-*load game state*
-`curl -X GET "localhost:8080/slot-machine?gameId=GAME_ID"`
+to render spin result you can compare your current game state (returned by GET or POST `spin-machine/` methods) with the new state (returned by POST `spin-machine/spin` method):
+```ts
+type State = {coins: number, points: number};
+
+function stateTransition(from: State, to: State): State {
+  return {
+    coins: to.coins - from.coins, // coins accumulated in current spin
+    points: to.points - from.points // points accumulated in current spin
+  }
+}
+```
+
+
+4. To reload or continue previous game use `curl -X GET "localhost:8080/slot-machine?gameId=GAME_ID"`
+
