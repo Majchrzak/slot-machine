@@ -31,12 +31,11 @@
 - `REDIS_LOCK_DURATION`
 - `REDIS_DB_INDEX`
 
-## skipped beacouse of limited time box
+## skipped because of limited time box
 - no swagger/open-api decorators,
 
-## client integration
+## rest api definition
 
-all endpoints will return Ok 200 code and body includig the `GameState` of current game or error code in case of failure:
 ```
 type GameState = {
   gameId: string;
@@ -48,10 +47,28 @@ type GameState = {
 };
 ```
 
-1. create a new game by requresting:
+- `GET localhost:8080/slot-machine`:
+  - 200 - OK, `GameState`
+  - 500 - Server Error,
+  - 404 - Not Found
+  - 400 - Bad Request
+- `POST localhost:8080/slot-machine`
+  - 200 - OK, `GameState`
+  - 500 - Server Error,
+  - 404 - Not Found
+  - 400 - Bad Request
+- `POST localhost:8080/slot-machine/spin`
+  - 200 - OK, `GameState`
+  - 500 - Server Error,
+  - 405 - Not Allowed,
+  - 404 - Not Found
+  - 400 - Bad Request
+
+## client integration
+1. create a new game by requesting:
 `curl -X POST localhost:8080/slot-machine`, you will get a game state:
-2. store the `gameId` from the response in client storage
-3. to play aka spin send request: 
+1. store the `gameId` from the response in client storage
+2. to play aka spin send request: 
 `curl -X POST localhost:8080/slot-machine/spin -H "Content-Type: application/json" -d '{"gameId": "GAME_ID"}'`
 
 to render spin result you can compare your current game state (returned by GET or POST `spin-machine/` methods) with the new state (returned by POST `spin-machine/spin` method):
