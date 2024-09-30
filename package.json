@@ -1,0 +1,52 @@
+{
+  "name": "slot-machine",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start:watch": "nodemon --exec ts-node -e ts,js,json src/server.ts",
+    "start": "ts-node src/server.ts",
+    "start:prod": "node dist/server.js",
+    "dist": "rm -Rf dist && tsc --project tsconfig.dist.json",
+    "lint": "tsc --noEmit && eslint {src,test}/**/*.ts",
+    "test": "jest",
+    "test:e2e": "jest --config jest.e2e.config.js --runInBand"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "cors": "2.8.5",
+    "dotenv": "^16.4.5",
+    "env-var": "7.1.1",
+    "express": "^4.17.3",
+    "ioredis": "^5.4.1",
+    "morgan": "1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "redlock": "^5.0.0-beta.2",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.10.4",
+    "typedi": "^0.10.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/cors": "2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jest": "27.4.1",
+    "@types/morgan": "1.9.3",
+    "@types/multer": "^1.4.12",
+    "@types/node": "16.11.7",
+    "@types/supertest": "2.0.11",
+    "@typescript-eslint/eslint-plugin": "5.12.1",
+    "@typescript-eslint/parser": "5.12.1",
+    "eslint": "8.9.0",
+    "jest": "27.5.1",
+    "nodemon": "2.0.22",
+    "supertest": "6.2.2",
+    "ts-jest": "27.1.3",
+    "ts-node": "10.5.0",
+    "typescript": "4.5.5"
+  }
+}

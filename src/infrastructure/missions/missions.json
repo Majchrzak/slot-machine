@@ -1,0 +1,36 @@
+{
+    "missions": [
+        {
+            "rewards": [
+                {
+                    "name": "spins",
+                    "value": 10
+                }
+            ],
+            "pointsGoal": 10
+        },
+        {
+            "rewards": [
+                {
+                    "name": "coins",
+                    "value": 10
+                }
+            ],
+            "pointsGoal": 20
+        },
+        {
+            "rewards": [
+                {
+                    "name": "spins",
+                    "value": 100
+                },
+                {
+                    "name": "coins",
+                    "value": 100
+                }
+            ],
+            "pointsGoal": 100
+        }
+    ],
+    "repeatedIndex": 1
+}
