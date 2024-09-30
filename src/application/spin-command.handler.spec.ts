@@ -1,5 +1,5 @@
 import { SlotMachineState } from "../domain/slot-machine-state";
-import { errored, notFound } from "./interfaces/errors";
+import { errored, notAllowed, notFound } from "./interfaces/errors";
 import { randomUUID } from "crypto";
 import { Mutex } from "./interfaces/mutex";
 import {
@@ -34,6 +34,27 @@ describe(SpinCommandHandler.name, () => {
       });
 
       fixtures.then.succeeded(result);
+    });
+
+    test("not allowed, already finished", async () => {
+      const missions = new Missions([], 0);
+      const generator = new SpinRandomGenerator();
+      const state = SlotMachineState.fromSnapshot({
+        ...fixtures.given.snapshot,
+        spins: 0,
+      });
+
+      fixtures.given.slotMachineState.findOne.succeeds(state);
+      fixtures.given.slotMachineState.save.succeeds(state);
+      fixtures.given.missions.get.succeeds(missions);
+      fixtures.given.spinGenerator.get.succeeds(generator);
+
+      const result = await fixtures.when.executed({
+        gameId: fixtures.given.snapshot.gameId,
+      });
+
+      fixtures.then.notAllowed(result);
+      fixtures.then.infoLogged();
     });
 
     test("errored, get missions failed", async () => {
@@ -197,8 +218,14 @@ function getFixtures() {
       notFound(result: SpinCommandResult) {
         expect(result).toEqual(notFound);
       },
+      notAllowed(result: SpinCommandResult) {
+        expect(result).toEqual(notAllowed);
+      },
       errorLogged() {
         expect(logger.error).toBeCalled();
+      },
+      infoLogged() {
+        expect(logger.info).toBeCalled();
       },
     },
   };

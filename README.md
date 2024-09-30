@@ -5,7 +5,7 @@
 - used some DDD patterns in domain (skipped event sourcing etc.)
 - used hexagonal architecture + cqrs
 - used class-validator to validate requests and json objects,
-- used jest for unit and e2e tests,
+- used jest for unit and integration tests,
 - used typedi as dependency container,
 - used docker compose to orchestrate dependencies,
 - decided to not use any higher level framework (for instance nestjs)
@@ -15,7 +15,7 @@
 - `docker-compose up -d` to spawn redis on local machine
 - `npm start` to start application
 - `npm run test` to execute unit tests
-- `npm run test:e2e` to execute e2e tests
+- `npm run test:int` to execute integration tests
   
 <img width="632" alt="image" src="https://github.com/user-attachments/assets/02e458f0-6cc5-4bd1-97c1-7528ef97b1c5">
 
@@ -25,6 +25,7 @@
 - `REDIS_HOST`
 - `REDIS_PASSWORD`
 - `REDIS_LOCK_DURATION`
+- `REDIS_DB_INDEX`
 
 ## skipped beacouse of limited time box
 - no swagger/open-api decorators,
@@ -38,10 +39,11 @@
 
 to render spin result you can compare your current game state (returned by GET or POST `spin-machine/` methods) with the new state (returned by POST `spin-machine/spin` method):
 ```ts
-type State = {coins: number, points: number};
+type State = { spins: number, coins: number, points: number };
 
-function stateTransition(from: State, to: State): State {
+function getStateTransition(from: State, to: State): State {
   return {
+    spins: to.spins - from.spins + 1, // spins accumulated in current spin
     coins: to.coins - from.coins, // coins accumulated in current spin
     points: to.points - from.points // points accumulated in current spin
   }

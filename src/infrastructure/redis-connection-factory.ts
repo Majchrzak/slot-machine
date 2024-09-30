@@ -32,6 +32,7 @@ export class RedisConnectionFactory {
       port: this.configuration.getInt("REDIS_PORT", 6379),
       host: this.configuration.getString("REDIS_HOST"),
       password: this.configuration.getString("REDIS_PASSWORD"),
+      db: this.configuration.getInt("REDIS_DB_INDEX", 0),
     });
   }
 }

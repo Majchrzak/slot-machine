@@ -12,7 +12,7 @@
     "dist": "rm -Rf dist && tsc --project tsconfig.dist.json",
     "lint": "tsc --noEmit && eslint {src,test}/**/*.ts",
     "test": "jest",
-    "test:e2e": "jest --config jest.e2e.config.js --runInBand"
+    "test:int": "jest --config jest.int.config.js --runInBand"
   },
   "dependencies": {
     "body-parser": "^1.19.2",

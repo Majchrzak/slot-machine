@@ -3,7 +3,10 @@ import envVar from "env-var";
 import assert from "assert";
 
 export type StringEnvVars = "REDIS_HOST" | "REDIS_PASSWORD";
-export type IntEnvVars = "REDIS_PORT" | "REDIS_LOCK_DURATION";
+export type IntEnvVars =
+  | "REDIS_PORT"
+  | "REDIS_LOCK_DURATION"
+  | "REDIS_DB_INDEX";
 
 @Service()
 export class Configuration {

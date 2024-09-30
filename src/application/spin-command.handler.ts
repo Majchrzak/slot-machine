@@ -11,7 +11,7 @@ import {
 } from "./interfaces/missions.source";
 import { SpinGeneratorSource } from "./interfaces/spin-generator.source";
 import { SlotMachineStateSnapshot } from "../domain/slot-machine-state";
-import { errored, notFound } from "./interfaces/errors";
+import { errored, notAllowed, notFound } from "./interfaces/errors";
 import { Logger, loggerToken } from "./interfaces/logger";
 
 export class SpinCommand {
@@ -20,6 +20,7 @@ export class SpinCommand {
 
 export type SpinCommandResult =
   | SlotMachineStateSnapshot
+  | typeof notAllowed
   | typeof notFound
   | typeof errored;
 
@@ -66,7 +67,11 @@ export class SpinCommandHandler {
         const machine = new SlotMachine(maybeState);
 
         if (!machine.trySpin(generator, maybeMissions)) {
-          return maybeState.toSnapshot();
+          this.logger.info(
+            `Unable to spin, state finished for gameId: ${command.gameId}`
+          );
+
+          return notAllowed;
         }
 
         maybeState = await this.slotMachineStateSource.save(maybeState);

@@ -7,6 +7,7 @@ import {
   Get,
   NotFoundError,
   QueryParams,
+  MethodNotAllowedError,
 } from "routing-controllers";
 import { Service } from "typedi";
 import {
@@ -16,7 +17,11 @@ import {
 import { SlotMachineSpinRequest } from "./request/slot-machine-spin.request";
 import { SlotMachineStateResponse } from "./response/slot-machine-state.response";
 import { SlotMachineStateRequest } from "./request/slot-machine-state.request";
-import { errored, notFound } from "../application/interfaces/errors";
+import {
+  errored,
+  notAllowed,
+  notFound,
+} from "../application/interfaces/errors";
 import { CreateStateCommandHandler } from "../application/create-state-command.handler";
 import { GetStateQueryHandler } from "../application/get-state-query.handler";
 
@@ -56,6 +61,8 @@ export class SlotMachineController {
 
   private tryInterceptResult(result: SpinCommandResult) {
     switch (result) {
+      case notAllowed:
+        throw new MethodNotAllowedError("method not allowed");
       case notFound:
         throw new NotFoundError("game not found");
       case errored:
