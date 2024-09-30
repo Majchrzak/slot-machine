@@ -16,8 +16,12 @@
 - `npm start` to start application
 - `npm run test` to execute unit tests
 - `npm run test:int` to execute integration tests
-  
-<img width="632" alt="image" src="https://github.com/user-attachments/assets/02e458f0-6cc5-4bd1-97c1-7528ef97b1c5">
+
+## unit tests
+<img width="605" alt="image" src="https://github.com/user-attachments/assets/8033ca38-614b-4eb3-806a-3e4560886750">
+
+## integration tests
+<img width="466" alt="image" src="https://github.com/user-attachments/assets/fdb99523-4213-45b9-b768-6ee90ffd3847">
 
 ## configuration (env variables)
 - `APP_PORT`
@@ -31,8 +35,21 @@
 - no swagger/open-api decorators,
 
 ## client integration
+
+all endpoints will return Ok 200 code and body includig the `GameState` of current game or error code in case of failure:
+```
+type GameState = {
+  gameId: string;
+  state: {
+    spins: number;
+    coins: number;
+    points: number;
+  };
+};
+```
+
 1. create a new game by requresting:
-`curl -X POST localhost:8080/slot-machine`, 
+`curl -X POST localhost:8080/slot-machine`, you will get a game state:
 2. store the `gameId` from the response in client storage
 3. to play aka spin send request: 
 `curl -X POST localhost:8080/slot-machine/spin -H "Content-Type: application/json" -d '{"gameId": "GAME_ID"}'`
