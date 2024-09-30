@@ -36,7 +36,7 @@
 
 ## rest api definition
 
-```
+```ts
 type GameState = {
   gameId: string;
   state: {
