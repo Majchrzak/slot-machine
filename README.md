@@ -16,6 +16,8 @@
 - `npm start` to start application
 - `npm run test` to execute unit tests
 - `npm run test:e2e` to execute e2e tests
+  
+<img width="632" alt="image" src="https://github.com/user-attachments/assets/02e458f0-6cc5-4bd1-97c1-7528ef97b1c5">
 
 ## configuration (env variables)
 - `APP_PORT`
