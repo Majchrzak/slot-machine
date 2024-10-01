@@ -66,8 +66,8 @@ type GameState = {
 
 ## client integration
 1. create a new game by requesting:
-`curl -X POST localhost:8080/slot-machine`, you will get a game state:
-1. store the `gameId` from the response in client storage
+`curl -X POST localhost:8080/slot-machine`
+1. store the `gameId` from the response in a client storage
 2. to play aka spin send request: 
 `curl -X POST localhost:8080/slot-machine/spin -H "Content-Type: application/json" -d '{"gameId": "GAME_ID"}'`
 
